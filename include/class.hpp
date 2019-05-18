@@ -6,6 +6,8 @@
 class CASE
 {
 	public:
+		CASE();
+		~CASE();
 
 	protected:
 		bool bomb;
@@ -33,6 +35,8 @@ class POINTINTEROGATION : public CASE
 class MINUTEUR
 {
 	public:
+		MINUTEUR();
+		~MINUTEUR();
 		void beginTimer();
 		void getTime();
 		void incTime();
