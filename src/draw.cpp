@@ -8,7 +8,7 @@
 
 static SDL_Rect options_menu[NB_OPTION];
 static SDL_Rect menu;
-SDL_Rect title;
+static SDL_Rect title;
 
 /* Entrées    : renderer (un moteur de rendu), origin (un point), ray (un entier)
  * Sorties    : -
