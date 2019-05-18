@@ -51,6 +51,8 @@ class MINUTEUR
 class GRILLE
 {
 	public:
+		GRILLE();
+		~GRILLE();
 
 	protected:
 		CASE **grid;
@@ -66,6 +68,8 @@ class GRILLE
 class BOUTON
 {
 	public:
+		BOUTON();
+		~BOUTON();
 
 	protected:
 		std::string name;
@@ -79,6 +83,8 @@ class BOUTON
 class ELEMENT_FENETRE
 {
 	public:
+		ELEMENT_FENETRE();
+		~ELEMENT_FENETRE();
 
 	protected:
 		GRILLE field;
@@ -93,6 +99,8 @@ class ELEMENT_FENETRE
 class PARTIE
 {
 	public:
+		PARTIE();
+		~PARTIE();
 		void begin();
 
 	protected:

@@ -5,6 +5,7 @@
 #include "../lib/SDL2/include/SDL_ttf.h"
 
 void drawCircle(SDL_Renderer *renderer, SDL_Point origin, int ray);
+SDL_Rect *get_options_menu();
 
 int initDrawINTRO(SDL_Renderer *renderer);
 void drawINTRO(SDL_Renderer *renderer);

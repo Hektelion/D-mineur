@@ -22,6 +22,38 @@ MINUTEUR::~MINUTEUR(){
 
 }
 
+//GRILLE
+GRILLE::GRILLE(){
+
+}
+GRILLE::~GRILLE(){
+
+}
+
+//BOUTON
+BOUTON::BOUTON(){
+
+}
+BOUTON::~BOUTON(){
+
+}
+
+//ELEMENT_FENETRE
+ELEMENT_FENETRE::ELEMENT_FENETRE(){
+
+}
+ELEMENT_FENETRE::~ELEMENT_FENETRE(){
+
+}
+
+//PARTIE
+PARTIE::PARTIE(){
+
+}
+PARTIE::~PARTIE(){
+
+}
+
 //============================================
 //=================== CASE ===================
 //============================================

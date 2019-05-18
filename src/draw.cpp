@@ -6,12 +6,12 @@
 #include "../lib/SDL2/include/SDL.h"
 #include "../lib/SDL2/include/SDL_ttf.h"
 
-static SDL_Rect options_menu[6];
+static SDL_Rect options_menu[NB_OPTION];
 static SDL_Rect menu;
 SDL_Rect title;
 
 /* Entrées    : renderer (un moteur de rendu), origin (un point), ray (un entier)
- * Sorties    :
+ * Sorties    : -
  * Variables  : point (un point), n (un entier)
  * Traitement : Cette fonction dessine un cercle plein à l'écran
  */
@@ -25,6 +25,15 @@ void drawCircle(SDL_Renderer *renderer, SDL_Point origin, int ray){
 		SDL_RenderDrawLine(renderer, origin.x, origin.y, point.x, point.y);
 	}
 
+}
+
+/* Entrées    : -
+ * Sorties    : -
+ * Variables  : -
+ * Traitement : Renvoi le tableau statique options_menu
+ */
+SDL_Rect *get_options_menu(){
+	return options_menu;
 }
 
 /* Entrées    : renderer (un moteur de rendu)
