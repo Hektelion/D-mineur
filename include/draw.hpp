@@ -2,7 +2,14 @@
 #define __DRAW_HPP__
 
 #include "../lib/SDL2/include/SDL.h"
-#include "../lib/SDL2/include/SDL_ttf.h"
+//#include "../lib/SDL2/include/SDL_ttf.h"
+
+#include "class/partie.hpp"
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
 
 void drawCircle(SDL_Renderer *renderer, SDL_Point origin, int ray);
 SDL_Rect *get_options_menu();
@@ -13,7 +20,7 @@ void drawINTRO(SDL_Renderer *renderer);
 int initDrawMENU(SDL_Renderer *renderer);
 void drawMENU(SDL_Renderer *renderer);
 
-int initDrawGAME(SDL_Renderer *renderer);
-void drawGAME(SDL_Renderer *renderer);
+int initDrawGAME(SDL_Renderer *renderer, vector< vector<SDL_Rect> > & graphic_field);
+void drawGAME(SDL_Renderer *renderer, vector< vector<SDL_Rect> > & graphic_field);
 
 #endif //__DRAW_HPP__

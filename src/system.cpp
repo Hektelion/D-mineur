@@ -71,7 +71,7 @@ int create_window(SDL_Window **window){
 	if(MODE_DEBUG) std::cout << "Création de la fenetre..." << std::endl;
 
 	//Création de la fenetre
-	*window = SDL_CreateWindow("OTHELLO",	//Nom de la fenetre
+	*window = SDL_CreateWindow("D-mineur",	//Nom de la fenetre
 	0,	//Origine x
 	0,	//Origine y
 	WIDTH,	//Largeur

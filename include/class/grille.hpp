@@ -10,16 +10,16 @@ class GRILLE
 		GRILLE();
 		GRILLE(int nb_line, int nb_col, int nb_bomb);
 		~GRILLE();
+		bool isInField(int x, int y);
+		void revealField(int x, int y);
 
-	protected:
+	private:
 		CASE **grid;
+		char **visible;
 		int nbRow;
 		int nbColumn;
 		int nbBombs;
 		int remainBombs;
-
-	private:
-
 };
 
 #endif //__GRILLE_HPP__

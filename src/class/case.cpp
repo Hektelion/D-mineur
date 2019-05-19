@@ -11,3 +11,13 @@ CASE::CASE(){
 CASE::~CASE(){
 	if(MODE_DEBUG) std::cout << "destruction CASE" << std::endl;
 }
+
+bool CASE::getBomb()
+{
+	return bomb;
+}
+
+int CASE::getNbBombAround()
+{
+	return nbBombAround;
+}

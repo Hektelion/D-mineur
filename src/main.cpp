@@ -39,14 +39,13 @@ int main(int argc, char **argv){
 	initDrawINTRO(renderer);
     drawINTRO(renderer);
 
+	SDL_Event event;
     do{
 		initDrawMENU(renderer);
 		options_menu = get_options_menu();
 		drawMENU(renderer);
 
 		//texte = TTF_RenderText_Blended(police, "Test", c_Noir);
-
-        SDL_Event event;
 
         //Traitement des la file d'evenements
         while ( SDL_PollEvent(&event) )
@@ -66,12 +65,12 @@ int main(int argc, char **argv){
 					if(SDL_PointInRect(&mouse, &options_menu[0]) == SDL_TRUE){
 						//LOG
 						if(MODE_DEBUG) std::cout << "Lancement d'une partie en mode facile" << std::endl;
-						//playOthello('0', renderer);
+						playMinesweeper(0, renderer);
 					}
 					else if(SDL_PointInRect(&mouse, &options_menu[1]) == SDL_TRUE){
 						//LOG
 						if(MODE_DEBUG) std::cout << "Lancement d'une partie en mode intermediaire" << std::endl;
-						//playOthello('1', renderer);
+						playMinesweeper(1, renderer);
 					}
 					else if(SDL_PointInRect(&mouse, &options_menu[2]) == SDL_TRUE){
 						//LOG

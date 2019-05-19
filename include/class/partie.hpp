@@ -7,18 +7,17 @@
 class PARTIE
 {
 	public:
-		PARTIE();
+		PARTIE(int nb_line, int nb_col, int nb_bomb);
 		//PARTIE();
 		~PARTIE();
 		void begin();
-
-	protected:
-		GRILLE field(40, 40, 40);
-		MINUTEUR timer;
-		bool isOver;
+		bool rightClic(int x, int y);
+		bool leftClic(int x, int y);
 
 	private:
-
+		GRILLE field;
+		MINUTEUR timer;
+		bool isOver;
 };
 
 #endif //__PARTIE_HPP__

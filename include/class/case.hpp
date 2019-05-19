@@ -6,6 +6,8 @@ class CASE
 	public:
 		CASE();
 		~CASE();
+		bool getBomb();
+		int getNbBombAround();
 
 	protected:
 		bool bomb;

@@ -1,10 +1,15 @@
 #include "../include/draw.hpp"
 #include "../include/constant.hpp"
-#include <iostream>
+//#include <iostream>
 #include <math.h>
 
 #include "../lib/SDL2/include/SDL.h"
 #include "../lib/SDL2/include/SDL_ttf.h"
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
 
 static SDL_Rect options_menu[NB_OPTION];
 static SDL_Rect menu;
@@ -131,7 +136,28 @@ void drawMENU(SDL_Renderer *renderer){
  * Traitement : Cette fonction initialise les elements
  				utilisé dans le dessin du plateau
  */
-int initDrawGAME(SDL_Renderer *renderer){
+int initDrawGAME(SDL_Renderer *renderer, vector< vector<SDL_Rect> > & graphic_field){
+	int width;
+    int heigth;
+
+	//Récupération de la taille de l'affichage
+    SDL_GetRendererOutputSize(renderer, &width, &heigth);
+
+	int side = width/graphic_field.size();
+	SDL_Point field_origin;
+
+	field_origin.x = 0;
+	field_origin.y = heigth * (2.0/9.0);
+
+	for(int i=0 ; i<graphic_field.size() ; i++){
+		for(int j=0 ; j<graphic_field[i].size() ; j++){
+			graphic_field[i][j].x = field_origin.x + i * side;
+			graphic_field[i][j].y = field_origin.y + j * side;
+			graphic_field[i][j].w = side;
+			graphic_field[i][j].h = side;
+		}
+	}
+
 	return EXIT_SUCCESS;
 }
 
@@ -141,6 +167,40 @@ int initDrawGAME(SDL_Renderer *renderer){
  * Variables  : nbMove (un entier), c_possible (un tableau de coup)
  * Traitement : Cette fonction dessine les éléments du jeu
  */
-void drawGAME(SDL_Renderer *renderer){
+void drawGAME(SDL_Renderer *renderer, vector< vector<SDL_Rect> > & graphic_field){
+	int width;
+    int heigth;
 
+	//Récupération de la taille de l'affichage
+    SDL_GetRendererOutputSize(renderer, &width, &heigth);
+
+	SDL_Point p1;
+	SDL_Point p2;
+
+	//Background Blanc
+    SDL_SetRenderDrawColor(renderer, 255,255,255,255);
+    SDL_RenderClear(renderer);
+
+	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+	for(int i=1 ; i<graphic_field.size() ; i++){
+		p1.x = graphic_field[i][0].x;
+		p1.y = graphic_field[i][0].y;
+
+		p2.x = graphic_field[i][0].x;
+		p2.y = heigth;
+
+		SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y);
+	}
+
+	for(int i=1 ; i<graphic_field[i].size() ; i++){
+		p1.x = 0;
+		p1.y = graphic_field[0][i].y;
+
+		p2.x = width;
+		p2.y = graphic_field[0][i].y;
+
+		SDL_RenderDrawLine(renderer, p1.x, p1.y, p2.x, p2.y);
+	}
+
+	SDL_RenderPresent(renderer);
 }
