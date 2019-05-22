@@ -10,5 +10,6 @@
 
 //SYSTEME
 #define MODE_DEBUG true
+#define LOG_APPEL_FONCTION false
 
 #endif //__CONSTANT_HPP__

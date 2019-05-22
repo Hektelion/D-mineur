@@ -21,3 +21,12 @@ int CASE::getNbBombAround()
 {
 	return nbBombAround;
 }
+
+void CASE::placeBomb()
+{
+	bomb = true;
+}
+
+void CASE::incNbBombAround(){
+	nbBombAround++;
+}

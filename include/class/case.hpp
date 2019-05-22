@@ -5,9 +5,11 @@ class CASE
 {
 	public:
 		CASE();
-		~CASE();
+		virtual ~CASE();
 		bool getBomb();
 		int getNbBombAround();
+		void placeBomb();
+		void incNbBombAround();
 
 	protected:
 		bool bomb;

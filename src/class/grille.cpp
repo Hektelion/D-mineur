@@ -2,28 +2,10 @@
 #include "../../include/constant.hpp"
 
 #include <iostream>
+#include <vector>
+#include <time.h>
 
-GRILLE::GRILLE()
-{
-	nbRow = 8;
-	nbColumn = 8;
-	nbBombs = 10;
-	remainBombs = 0;
-
-	if(MODE_DEBUG) std::cout << "allocation de *grid" << std::endl;
-	grid = new CASE*[nbColumn];
-
-	if(*grid != NULL)
-	{
-		for(int i=0 ; i<nbColumn ; i++)
-		{
-			if(MODE_DEBUG) std::cout << "allocation de grid[" << i << ']' << std::endl;
-			grid[i] = new CASE[nbRow];
-			if(grid[i] == NULL) std::cerr << "allocation de grid[" << i << "] ERREUR" << std::endl;
-		}
-	}
-	else std::cerr << "allocation de *grid[" << nbColumn << "] ERREUR" << std::endl;
-}
+using namespace std;
 
 GRILLE::GRILLE(int nb_line, int nb_col, int nb_bomb)
 {
@@ -32,52 +14,55 @@ GRILLE::GRILLE(int nb_line, int nb_col, int nb_bomb)
 	nbBombs = nb_bomb;
 	remainBombs = 0;
 
-	if(MODE_DEBUG) std::cout << "allocation de *grid" << std::endl;
-	grid = new CASE*[nbColumn];
+	if(MODE_DEBUG) cout << "Redimensionnement de grid" << endl;
+	grid.resize(nbColumn);
+	for(unsigned int i=0 ; i < grid.size() ; i++) {
+		grid[i].resize(nbRow);
+    }
 
-	if(*grid != NULL)
-	{
-		for(int i=0 ; i<nbColumn ; i++)
-		{
-			if(MODE_DEBUG) std::cout << "allocation de grid[" << i << ']' << std::endl;
-			grid[i] = new CASE[nbRow];
-			if(grid[i] == NULL) std::cerr << "allocation de grid[" << i << "] ERREUR" << std::endl;
-		}
-	}
-	else std::cerr << "allocation de *grid[" << nbColumn << "] ERREUR" << std::endl;
+	if(MODE_DEBUG) cout << "Redimensionnement de visible" << endl;
+	visible.resize(nbColumn);
+	for(unsigned int i=0 ; i < grid.size() ; i++) {
+		visible[i].resize(nbRow);
+    }
 
-	if(MODE_DEBUG) std::cout << "allocation de *visible" << std::endl;
-	visible = new char*[nbColumn];
-
-	if(*visible != NULL)
-	{
-		for(int i=0 ; i<nbColumn ; i++)
-		{
-			if(MODE_DEBUG) std::cout << "allocation de visible[" << i << ']' << std::endl;
-			visible[i] = new char[nbRow];
-			if(visible[i] == NULL) std::cerr << "allocation de visible[" << i << "] ERREUR" << std::endl;
-		}
-	}
-	else std::cerr << "allocation de *visible[" << nbColumn << "] ERREUR" << std::endl;
+	initGrid();
+	initVisible();
+	update();
 }
 
 GRILLE::~GRILLE()
 {
-	for(int i=0 ; i<nbColumn ; i++)
-	{
-		if(MODE_DEBUG) std::cout << "destruction de grid[" << i << ']' << std::endl;
-		delete(grid[i]);
-	}
-	delete(grid);
-	if(MODE_DEBUG) std::cout << "destruction grid" << std::endl;
+	if(MODE_DEBUG) cout << "Destruction GRILLE..." << endl;
+}
 
+void GRILLE::initGrid(){
+	srand(time(NULL));
+
+	for(int i = 0; i < nbBombs; i++)
+	{
+		int x, y;
+		while(true)
+		{
+			x = rand() % nbColumn;
+			y = rand() % nbRow;
+			if(grid[x][y].getBomb() != true)
+			{
+				grid[x][y].placeBomb();
+				break;
+			}
+		}
+	}
+}
+
+void GRILLE::initVisible(){
 	for(int i=0 ; i<nbColumn ; i++)
 	{
-		if(MODE_DEBUG) std::cout << "destruction de visible[" << i << ']' << std::endl;
-		delete(visible[i]);
+		for(int j=0 ; j<nbRow ; j++)
+		{
+			visible[i][j] = '#';
+		}
 	}
-	delete(visible);
-	if(MODE_DEBUG) std::cout << "destruction visible" << std::endl;
 }
 
 bool GRILLE::isInField(int x, int y)
@@ -87,11 +72,12 @@ bool GRILLE::isInField(int x, int y)
 
 void GRILLE::revealField(int x, int y)
 {
+	if(MODE_DEBUG) cout << "Appel de revealField case (" << x << ',' << y << ')' << endl;
 	if(isInField(x,y))
 	{
-		if(grid[x][y].getNbBombAround() == 0 && grid[x][y].getBomb() == false)
+		if(visible[x][y] == '#' && grid[x][y].getBomb() == false && grid[x][y].getNbBombAround() == 0 )
 		{
-			visible[x][y] = '0';
+			visible[x][y] = '.';
 			revealField(x - 1, y - 1);
 			revealField(x - 1, y);
 			revealField(x    , y - 1);
@@ -101,9 +87,69 @@ void GRILLE::revealField(int x, int y)
 			revealField(x + 1, y - 1);
 			revealField(x - 1, y + 1);
 		}
-		else
+		else if(grid[x][y].getNbBombAround() > 0)
 		{
-			visible[x][y] = (char)grid[x][y].getNbBombAround();
+			visible[x][y] = grid[x][y].getNbBombAround() + 48;
 		}
 	}
+	else
+	{
+		if(MODE_DEBUG) cout << "ERREUR revealField case (" << x << ',' << y << ") : en dehors de la grille" << endl;
+	}
+}
+
+void GRILLE::printGrid(){
+	for(int i=0 ; i<nbColumn ; i++)
+	{
+		for(int j=0 ; j<nbRow ; j++)
+		{
+			if(grid[i][j].getBomb() == true){
+				cout << "B ";
+			}
+			else if(grid[i][j].getNbBombAround() != 0){
+				cout << grid[i][j].getNbBombAround() << ' ';
+			}
+			else{
+				cout << ". ";
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+void GRILLE::printVisible(){
+	for(int i=0 ; i<nbColumn ; i++)
+	{
+		for(int j=0 ; j<nbRow ; j++)
+		{
+			cout << visible[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+void GRILLE::update(){
+	for(int i=0 ; i<nbColumn ; i++)
+	{
+		for(int j=0 ; j<nbRow ; j++)
+		{
+			if(grid[i][j].getBomb() == true)
+			{
+				if(isInField(i - 1, j - 1))	grid[i - 1][j - 1].incNbBombAround();
+				if(isInField(i - 1, j    ))	grid[i - 1][j    ].incNbBombAround();
+				if(isInField(i    , j - 1))	grid[i	  ][j - 1].incNbBombAround();
+				if(isInField(i + 1, j + 1))	grid[i + 1][j + 1].incNbBombAround();
+				if(isInField(i + 1, j    ))	grid[i + 1][j    ].incNbBombAround();
+				if(isInField(i    , j + 1))	grid[i	  ][j + 1].incNbBombAround();
+				if(isInField(i + 1, j - 1))	grid[i + 1][j - 1].incNbBombAround();
+				if(isInField(i - 1, j + 1))	grid[i - 1][j + 1].incNbBombAround();
+			}
+		}
+	}
+}
+
+bool GRILLE::isBombIn(int x, int y){
+	return grid[x][y].getBomb();
 }

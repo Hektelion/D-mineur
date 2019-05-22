@@ -18,7 +18,7 @@ int init_SDL(){
 	//============================================
 
 	//LOG
-	fprintf(stdout, "Initialisation de la bibliothèque SDL...\n");
+	if(MODE_DEBUG) std::cout << "Initialisation de la bibliothèque SDL..." << std::endl;
 	//Initialisation de la SDL
 	if( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0 ){
 		std::cerr << "Erreur SDL_Init : " << SDL_GetError() << std::endl;

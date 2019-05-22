@@ -11,11 +11,12 @@ class PARTIE
 		//PARTIE();
 		~PARTIE();
 		void begin();
-		bool rightClic(int x, int y);
 		bool leftClic(int x, int y);
+		void rightClic(int x, int y);
+		void log();
+		GRILLE field;
 
 	private:
-		GRILLE field;
 		MINUTEUR timer;
 		bool isOver;
 };

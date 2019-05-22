@@ -2,22 +2,35 @@
 ################ MAKEFILE PRINCIPAL ################
 ####################################################
 
+#EXECUTION
 CC = g++
-LDFLAGS = `sdl2-config --libs --cflags` -lSDL_ttf
+LDFLAGS = `sdl2-config --libs --cflags` -lSDL_ttf -lSDL2_image
 CFLAGS = -W -Wall
 EXEC = d-mineur
 
-INCLUDE_CLASS = $(wildcard include/class/*.hpp)
-INCLUDE = $(wildcard include/*.hpp)
+#CHEMIN FICHIER INCLU
+include_class_dir = include/class/
+include_dir = include/
 
-SRC_CLASS = $(wildcard src/class/*.cpp)
-SRC = $(wildcard src/*.cpp)
+#CHEMIN FICHIER SOURCE
+src_class_dir = src/class/
+src_dir = src/
 
-OBJ_CLASS = $(SRC_CLASS:src/class/%.cpp = obj/class/%.o)
-OBJ = $(SRC:src/%.cpp = obj/%.o)
+#CHEMIN FICHIER OBJET
+obj_class_dir = obj/class/
+obj_dir = obj/
 
-LINK_CLASS = $(SRC_CLASS:src/class/%.cpp = obj/class/%.o)
-LINK = $(SRC:src/%.cpp = obj/%.o)
+#LISTE FICHIER INCLU
+INCLUDE_CLASS = $(wildcard $(include_class_dir)*.hpp)
+INCLUDE = $(wildcard $(include_dir)*.hpp)
+
+#LISTE FICHIER SOURCE
+SRC_CLASS = $(wildcard $(src_class_dir)*.cpp)
+SRC = $(wildcard $(src_dir)*.cpp)
+
+#LISTE FICHIER OBJET
+OBJ_CLASS = $(SRC_CLASS:$(src_class_dir)%.cpp = $(obj_class_dir)%.o)
+OBJ = obj/logic.o obj/system.o obj/draw.o obj/main.o
 
 ####################################################
 
